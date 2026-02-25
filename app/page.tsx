@@ -37,6 +37,7 @@ export default function Page() {
     setQuery("");
     setResults([]);
     setFile(f);
+
     if (!f) {
       setPreview("");
       return;
@@ -58,8 +59,8 @@ export default function Page() {
         body: JSON.stringify({
           imageBase64: preview,
           hintText,
-          category
-        })
+          category,
+        }),
       });
 
       const data = await res.json();
@@ -77,9 +78,15 @@ export default function Page() {
   return (
     <div className="container">
       <div className="card">
-        <div className="h1">Deal Girly Finder 💖</div>
-        <p className="p">
-          Upload a photo of something you want (clothes/makeup/etc) and get the cheapest matches online.
+        {/* ✅ New Header */}
+        <div className="h1">Deal Finder</div>
+        <div className="small" style={{ marginTop: 4 }}>
+          Inspired by Maggie Lewinsky
+        </div>
+
+        <p className="p" style={{ marginTop: 12 }}>
+          Upload a photo of something you want (clothes/makeup/etc) and get the
+          cheapest matches online.
         </p>
 
         <div className="row">
@@ -90,7 +97,11 @@ export default function Page() {
             onChange={(e) => onPickFile(e.target.files?.[0] || null)}
           />
 
-          <select className="select" value={category} onChange={(e) => setCategory(e.target.value)}>
+          <select
+            className="select"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          >
             <option value="clothes">Clothes</option>
             <option value="makeup">Makeup</option>
             <option value="shoes">Shoes</option>
@@ -115,6 +126,7 @@ export default function Page() {
           <>
             <hr className="hr" />
             <div className="row">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={preview} alt="preview" className="thumb" />
               <span className="badge">Tip: add a hint for best accuracy</span>
             </div>
@@ -124,7 +136,13 @@ export default function Page() {
         {error && (
           <>
             <hr className="hr" />
-            <div className="badge" style={{ borderColor: "rgba(255,98,176,0.55)", color: "#ffd0e7" }}>
+            <div
+              className="badge"
+              style={{
+                borderColor: "rgba(255,98,176,0.55)",
+                color: "#ffd0e7",
+              }}
+            >
               {error}
             </div>
           </>
@@ -150,19 +168,32 @@ export default function Page() {
                 ) : (
                   <div className="thumb" />
                 )}
+
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: 800, marginBottom: 6 }}>{r.title}</div>
+                  <div style={{ fontWeight: 800, marginBottom: 6 }}>
+                    {r.title}
+                  </div>
+
                   <div className="row" style={{ justifyContent: "space-between" }}>
                     <div className="price">
-                      {typeof r.price === "number" ? `$${r.price.toFixed(2)}` : (r.priceText || "Price unknown")}
+                      {typeof r.price === "number"
+                        ? `$${r.price.toFixed(2)}`
+                        : r.priceText || "Price unknown"}
                     </div>
                     {r.source && <div className="badge">{r.source}</div>}
                   </div>
+
                   <div style={{ marginTop: 10 }}>
-                    <a className="badge" href={r.link} target="_blank" rel="noreferrer">
+                    <a
+                      className="badge"
+                      href={r.link}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
                       Open listing →
                     </a>
                   </div>
+
                   <div className="small" style={{ marginTop: 10 }}>
                     Ranked by cheapest (unknown prices go last).
                   </div>
@@ -174,7 +205,8 @@ export default function Page() {
       )}
 
       <div className="small" style={{ marginTop: 18 }}>
-        Next upgrade: plug in real image understanding (vision model) so users don’t need to type hints.
+        Next upgrade: plug in real image understanding (vision model) so users
+        don’t need to type hints.
       </div>
     </div>
   );
