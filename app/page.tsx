@@ -58,7 +58,7 @@ export default function Page() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           imageBase64: preview,
-          hintText,
+          hintText, // optional now
           category,
         }),
       });
@@ -78,7 +78,7 @@ export default function Page() {
   return (
     <div className="container">
       <div className="card">
-        {/* ✅ New Header */}
+        {/* Header */}
         <div className="h1">Deal Finder</div>
         <div className="small" style={{ marginTop: 4 }}>
           Inspired by Maggie Lewinsky
@@ -111,7 +111,7 @@ export default function Page() {
 
           <input
             className="input"
-            placeholder='Optional: "pink corset top", "rare beauty blush shade", etc.'
+            placeholder='Optional hint (helps): "pink corset top", "rare beauty blush", etc.'
             value={hintText}
             onChange={(e) => setHintText(e.target.value)}
             style={{ flex: 1, minWidth: 260 }}
@@ -128,7 +128,9 @@ export default function Page() {
             <div className="row">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={preview} alt="preview" className="thumb" />
-              <span className="badge">Tip: add a hint for best accuracy</span>
+              <span className="badge">
+                Tip: the hint is optional, but can improve accuracy.
+              </span>
             </div>
           </>
         )}
@@ -174,7 +176,10 @@ export default function Page() {
                     {r.title}
                   </div>
 
-                  <div className="row" style={{ justifyContent: "space-between" }}>
+                  <div
+                    className="row"
+                    style={{ justifyContent: "space-between" }}
+                  >
                     <div className="price">
                       {typeof r.price === "number"
                         ? `$${r.price.toFixed(2)}`
@@ -203,11 +208,6 @@ export default function Page() {
           ))}
         </div>
       )}
-
-      <div className="small" style={{ marginTop: 18 }}>
-        Next upgrade: plug in real image understanding (vision model) so users
-        don’t need to type hints.
-      </div>
     </div>
   );
 }
